@@ -1,0 +1,96 @@
+<!--
+	NOTES:
+	1. All tokens are represented by '$' sign in the template.
+	2. You can write your code only wherever mentioned.
+	3. All occurrences of existing tokens will be replaced by their appropriate values.
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+    <!-- write your code here -->
+
+
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script src="AndresDeOrcajo_eje2.js?1463797359610"></script>
+    <script>
+        var canvas, stage, exportRoot;
+
+        function init() {
+            // --- write your JS code here ---
+
+            canvas = document.getElementById("canvas");
+            images = images || {};
+            ss = ss || {};
+
+            var loader = new createjs.LoadQueue(false);
+            loader.installPlugin(createjs.Sound);
+            loader.addEventListener("fileload", handleFileLoad);
+            loader.addEventListener("complete", handleComplete);
+            loader.loadFile({
+                src: "images/AndresDeOrcajo_eje2_atlas_.json?1463797359610",
+                type: "spritesheet",
+                id: "AndresDeOrcajo_eje2_atlas_"
+            }, true);
+            loader.loadManifest(lib.properties.manifest);
+        }
+
+        function handleFileLoad(evt) {
+            if (evt.item.type == "image") {
+                images[evt.item.id] = evt.result;
+            }
+        }
+
+        function handleComplete(evt) {
+            var queue = evt.target;
+            ss["AndresDeOrcajo_eje2_atlas_"] = queue.getResult("AndresDeOrcajo_eje2_atlas_");
+            exportRoot = new lib.AndresDeOrcajo_eje2();
+
+            stage = new createjs.Stage(canvas);
+            stage.addChild(exportRoot);
+            stage.update();
+            stage.enableMouseOver();
+
+            createjs.Ticker.setFPS(lib.properties.fps);
+            createjs.Ticker.addEventListener("tick", stage);
+        }
+
+
+        function playSound(id, loop) {
+            return createjs.Sound.play(id, createjs.Sound.INTERRUPT_EARLY, 0, 0, loop);
+        }
+    </script>
+
+    <!-- write your code here -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+
+<body onload="init();" style="background-color:#003366;margin:0px;">
+    <br>
+    <div class="container">
+        <span class="blanco imagen" style="font-weight: bold; font-size: 5vw">Pirate's Adventure</span>
+    </div>
+    <br>
+    <div class="container">
+        <nav>
+            <ul class="nav nav-justified menu">
+                <li><a href="index.html" class="carrot  activo imagen">Inicio</a></li>
+                <li><a href="navegacion.html" class="cielo">Navegación</a></li>
+                <li><a href="creditos.html" class="verde">Créditos</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
+        <canvas id="canvas" width="1024" height="768" style="background-color:#003366;width:100%;text-align:center;"></canvas>
+    </div>
+
+</body>
+
+</html>
